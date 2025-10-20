@@ -9,7 +9,7 @@ Get up and running with vLLM Gateway monitoring in 5 minutes.
 - kubectl configured
 - k6 installed (optional, for load testing)
 
-## Step 1: Install Python Dependencies
+## Step 1: Install required dependencies
 
 ```bash
 cd /home/amoorching/vx/vllm-gateway
