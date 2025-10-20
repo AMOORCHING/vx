@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: gpu-exporter
+  namespace: vllm-monitoring
+  labels:
+    app: gpu-exporter
+spec:
+  selector:
+    matchLabels:
+      app: gpu-exporter
+  template:
+    metadata:
+      labels:
+        app: gpu-exporter
+    spec:
+      hostNetwork: true
+      hostPID: true
+      containers:
+      - name: gpu-exporter
+        image: utkuozdemir/nvidia_gpu_exporter:1.2.0
+        ports:
+        - containerPort: 9835
+          name: metrics
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: nvidia
+          mountPath: /usr/local/nvidia
+          readOnly: true
+        - name: nvidia-bin
+          mountPath: /usr/bin/nvidia-smi
+          readOnly: true
+        env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: "all"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+      volumes:
+      - name: nvidia
+        hostPath:
+          path: /usr/local/nvidia
+      - name: nvidia-bin
+        hostPath:
+          path: /usr/bin/nvidia-smi
+      tolerations:
+      - effect: NoSchedule
+        operator: Exists
+
