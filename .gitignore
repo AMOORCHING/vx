@@ -1,0 +1,13 @@
+# ignore .scripts
+scripts/
+
+# ignore .env
+.env
+
+# ignore .env.local
+.env.local
+
+# ignore .env.development.local
+.env.development.local
+
+# ignore .env.test.local    git rm -r --cached my_private_folder
