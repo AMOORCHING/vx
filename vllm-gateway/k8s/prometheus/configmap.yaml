@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: vllm-monitoring
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+    
+    scrape_configs:
+      # vLLM Gateway metrics
+      - job_name: 'vllm-gateway'
+        static_configs:
+          - targets: ['host.docker.internal:9000']
+            labels:
+              service: 'vllm-gateway'
+        metrics_path: '/metrics'
+        scrape_interval: 5s
+      
+      # GPU metrics from nvidia-smi exporter
+      - job_name: 'gpu-exporter'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - vllm-monitoring
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_label_app]
+            action: keep
+            regex: gpu-exporter
+          - source_labels: [__meta_kubernetes_pod_ip]
+            action: replace
+            target_label: __address__
+            replacement: $1:9835
+          - source_labels: [__meta_kubernetes_pod_node_name]
+            action: replace
+            target_label: node
+        scrape_interval: 5s
+      
+      # Prometheus self-monitoring
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['localhost:9090']
+
