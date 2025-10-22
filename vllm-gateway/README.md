@@ -135,3 +135,12 @@ kubectl delete namespace vllm-monitoring
 - GPU UUIDs in dashboard are for RTX 3090s (update if different)
 - All services use NodePort for easy access on local clusters
 
+# TinyLlama deployment api server deployment
+
+MODEL="TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+CUDA_VISIBLE_DEVICES=0 python -m vllm.entrypoints.openai.api_server \
+  --model $MODEL \
+  --gpu-memory-utilization 0.8 \
+  --max-model-len 2048 \
+  --host 127.0.0.1 --port 8000
+
