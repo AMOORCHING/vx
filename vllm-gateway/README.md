@@ -135,6 +135,16 @@ kubectl delete namespace vllm-monitoring
 - GPU UUIDs in dashboard are for RTX 3090s (update if different)
 - All services use NodePort for easy access on local clusters
 
+# Pasting ts cuz im lazy
+
+# Activate venv
+
+source venv/bin/activate
+
+# Run uvicorn fastapi
+
+cd vx/vllm* && python main.y
+
 # TinyLlama deployment api server deployment
 
 MODEL="TinyLlama/TinyLlama-1.1B-Chat-v1.0"
