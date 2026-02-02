@@ -143,7 +143,7 @@ source venv/bin/activate
 
 # Run uvicorn fastapi
 
-cd vx/vllm* && python main.y
+cd vx/vllm* && python main.py
 
 # TinyLlama deployment api server deployment
 
