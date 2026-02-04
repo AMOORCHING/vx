@@ -154,3 +154,11 @@ CUDA_VISIBLE_DEVICES=0 python -m vllm.entrypoints.openai.api_server \
   --max-model-len 2048 \
   --host 127.0.0.1 --port 8000
 
+
+
+# Keep track of in TMUX (4 panes)
+
+# K3d Cluster Deployment -> Grafana port forward to port 3000 (after deployment script)
+# fastapi gateway server (port 8000)
+# run the model (tinyllama)
+# prometheus deployment script ./deployment.yaml
