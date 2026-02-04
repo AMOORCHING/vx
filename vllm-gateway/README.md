@@ -7,8 +7,8 @@ A FastAPI-based gateway for vLLM with comprehensive monitoring, metrics, and loa
 ### 1. Start the Gateway
 ```bash
 python main.py
-# Gateway runs at http://127.0.0.1:9000
-# Metrics at http://127.0.0.1:9000/metrics
+# Gateway runs at http://127.0.0.1:8000
+# Metrics at http://127.0.0.1:8000/metrics
 ```
 
 ### 2. Deploy Monitoring Stack
@@ -117,7 +117,7 @@ kubectl port-forward -n vllm-monitoring svc/prometheus 9090:9090
 k6 run loadtests/baseline.js
 
 # View metrics directly
-curl http://127.0.0.1:9000/metrics
+curl http://127.0.0.1:8000/metrics
 
 # Cleanup
 kubectl delete namespace vllm-monitoring
@@ -130,9 +130,9 @@ kubectl delete namespace vllm-monitoring
 
 ## Notes
 
-- Gateway expects vLLM backend at `http://127.0.0.1:8000`
-- Prometheus scrapes gateway at `http://host.docker.internal:9000/metrics`
-- GPU UUIDs in dashboard are for RTX 3090s (update if different)
+- Gateway expects vLLM backend at `http://127.0.0.1:9000`
+- Prometheus scrapes gateway at `http://host.docker.internal:8000/metrics`
+- GPU UUIDs are automatically detected from nvidia-smi (dashboard uses dynamic labels)
 - All services use NodePort for easy access on local clusters
 
 # Pasting ts cuz im lazy
@@ -152,7 +152,7 @@ CUDA_VISIBLE_DEVICES=0 python -m vllm.entrypoints.openai.api_server \
   --model $MODEL \
   --gpu-memory-utilization 0.8 \
   --max-model-len 2048 \
-  --host 127.0.0.1 --port 8000
+  --host 127.0.0.1 --port 9000
 
 
 
@@ -160,5 +160,5 @@ CUDA_VISIBLE_DEVICES=0 python -m vllm.entrypoints.openai.api_server \
 
 # K3d Cluster Deployment -> Grafana port forward to port 3000 (after deployment script)
 # fastapi gateway server (port 8000)
-# run the model (tinyllama)
+# vLLM model server (port 9000)
 # prometheus deployment script ./deployment.yaml

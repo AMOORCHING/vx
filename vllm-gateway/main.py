@@ -8,7 +8,7 @@ from prometheus_client import Counter, Gauge, Histogram, generate_latest, CONTEN
 from prometheus_client import REGISTRY
 import uvicorn
 
-VLLM_URL = "http://127.0.0.1:8000/v1/chat/completions"
+VLLM_URL = "http://127.0.0.1:9000/v1/chat/completions"
 
 app = FastAPI()
 request_queue_depth = Gauge("gateway_queue_depth", "In-flight requests at the gateway")
@@ -79,4 +79,4 @@ async def chat(request: Request):
         await _dec()
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=9000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)

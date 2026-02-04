@@ -13,7 +13,7 @@ data:
       # vLLM Gateway metrics
       - job_name: 'vllm-gateway'
         static_configs:
-          - targets: ['host.docker.internal:9000']
+          - targets: ['host.docker.internal:8000']
             labels:
               service: 'vllm-gateway'
         metrics_path: '/metrics'
