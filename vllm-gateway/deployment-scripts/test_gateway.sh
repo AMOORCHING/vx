@@ -6,7 +6,7 @@ RED='\033[0;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-GATEWAY_URL="${GATEWAY_URL:-http://127.0.0.1:9000}"
+GATEWAY_URL="${GATEWAY_URL:-http://127.0.0.1:8000}"
 
 echo -e "${GREEN}Testing vLLM Gateway at $GATEWAY_URL${NC}"
 echo ""
