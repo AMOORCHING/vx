@@ -3,7 +3,7 @@ import time, asyncio, math
 from typing import AsyncGenerator
 import httpx
 from fastapi import FastAPI, Request
-from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi.responses import StreamingResponse, JSONResponse, Response
 from prometheus_client import Counter, Gauge, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from prometheus_client import REGISTRY
 import uvicorn
@@ -39,8 +39,8 @@ async def health():
 
 @app.get("/metrics")
 async def metrics():
-    return JSONResponse(content=generate_latest(REGISTRY).decode("utf-8"),
-                        media_type=CONTENT_TYPE_LATEST)
+    return Response(content=generate_latest(REGISTRY),
+                    media_type=CONTENT_TYPE_LATEST)
 
 @app.post("/chat")
 async def chat(request: Request):
@@ -79,4 +79,4 @@ async def chat(request: Request):
         await _dec()
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

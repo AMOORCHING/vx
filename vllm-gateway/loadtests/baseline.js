@@ -43,7 +43,7 @@ export const options = {
 };
 
 // Test configuration
-const GATEWAY_URL = __ENV.GATEWAY_URL || 'http://127.0.0.1:9000';
+const GATEWAY_URL = __ENV.GATEWAY_URL || 'http://127.0.0.1:8000';
 const CHAT_ENDPOINT = `${GATEWAY_URL}/chat`;
 
 // Sample prompts for variety
